@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Article: 'Article',
-  Quiz: 'Quiz'
+  Quiz: 'Quiz',
+  Score: 'Score'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,6 +112,18 @@ export const QuizScalarFieldEnum = {
 } as const
 
 export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
+
+
+export const ScoreScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  articleId: 'articleId',
+  score: 'score',
+  timeSpent: 'timeSpent',
+  createdAt: 'createdAt'
+} as const
+
+export type ScoreScalarFieldEnum = (typeof ScoreScalarFieldEnum)[keyof typeof ScoreScalarFieldEnum]
 
 
 export const SortOrder = {

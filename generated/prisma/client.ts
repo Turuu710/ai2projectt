@@ -56,3 +56,8 @@ export type Article = Prisma.ArticleModel
  * 
  */
 export type Quiz = Prisma.QuizModel
+/**
+ * Model Score
+ * 
+ */
+export type Score = Prisma.ScoreModel

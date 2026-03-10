@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
@@ -25,17 +25,30 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { userId } = await auth();
+  const { userId: clerkId } = await auth();
 
   try {
     const body = await req.json();
     const { title, content, summary } = body;
 
-    if (!title || !content || !userId) {
+    if (!title || !content || !clerkId) {
       return NextResponse.json(
-        { error: "title, content, clerkId, userId are required" },
+        { error: "title, content, and authentication are required" },
         { status: 400 },
       );
+    }
+
+    let dbUser = await prisma.user.findFirst({ where: { clerkId } });
+
+    if (!dbUser) {
+      const client = await clerkClient();
+      const clerkUser = await client.users.getUser(clerkId);
+      const email = clerkUser.emailAddresses[0]?.emailAddress ?? "";
+      const name = `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
+
+      dbUser = await prisma.user.create({
+        data: { clerkId, email, name },
+      });
     }
 
     const article = await prisma.article.create({
@@ -43,8 +56,8 @@ export async function POST(req: NextRequest) {
         title,
         content,
         summary: summary ?? "",
-        clerkId: userId,
-        userId,
+        clerkId,
+        userId: dbUser.id,
       },
     });
 

@@ -208,6 +208,7 @@ export type ArticleWhereInput = {
   userId?: Prisma.StringFilter<"Article"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   quizzes?: Prisma.QuizListRelationFilter
+  scores?: Prisma.ScoreListRelationFilter
 }
 
 export type ArticleOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type ArticleOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   quizzes?: Prisma.QuizOrderByRelationAggregateInput
+  scores?: Prisma.ScoreOrderByRelationAggregateInput
 }
 
 export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +239,7 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Article"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   quizzes?: Prisma.QuizListRelationFilter
+  scores?: Prisma.ScoreListRelationFilter
 }, "id" | "id">
 
 export type ArticleOrderByWithAggregationInput = {
@@ -277,6 +280,7 @@ export type ArticleCreateInput = {
   updateAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArticlesInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutArticleInput
+  scores?: Prisma.ScoreCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUncheckedCreateInput = {
@@ -289,6 +293,7 @@ export type ArticleUncheckedCreateInput = {
   updateAt?: Date | string
   userId: string
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutArticleInput
+  scores?: Prisma.ScoreUncheckedCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUpdateInput = {
@@ -301,6 +306,7 @@ export type ArticleUpdateInput = {
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutArticleNestedInput
+  scores?: Prisma.ScoreUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateInput = {
@@ -313,6 +319,7 @@ export type ArticleUncheckedUpdateInput = {
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutArticleNestedInput
+  scores?: Prisma.ScoreUncheckedUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleCreateManyInput = {
@@ -451,6 +458,20 @@ export type ArticleUpdateOneRequiredWithoutQuizzesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ArticleUpdateToOneWithWhereWithoutQuizzesInput, Prisma.ArticleUpdateWithoutQuizzesInput>, Prisma.ArticleUncheckedUpdateWithoutQuizzesInput>
 }
 
+export type ArticleCreateNestedOneWithoutScoresInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutScoresInput, Prisma.ArticleUncheckedCreateWithoutScoresInput>
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutScoresInput
+  connect?: Prisma.ArticleWhereUniqueInput
+}
+
+export type ArticleUpdateOneRequiredWithoutScoresNestedInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutScoresInput, Prisma.ArticleUncheckedCreateWithoutScoresInput>
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutScoresInput
+  upsert?: Prisma.ArticleUpsertWithoutScoresInput
+  connect?: Prisma.ArticleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ArticleUpdateToOneWithWhereWithoutScoresInput, Prisma.ArticleUpdateWithoutScoresInput>, Prisma.ArticleUncheckedUpdateWithoutScoresInput>
+}
+
 export type ArticleCreateWithoutUserInput = {
   id?: string
   title: string
@@ -460,6 +481,7 @@ export type ArticleCreateWithoutUserInput = {
   summary: string
   updateAt?: Date | string
   quizzes?: Prisma.QuizCreateNestedManyWithoutArticleInput
+  scores?: Prisma.ScoreCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUncheckedCreateWithoutUserInput = {
@@ -471,6 +493,7 @@ export type ArticleUncheckedCreateWithoutUserInput = {
   summary: string
   updateAt?: Date | string
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutArticleInput
+  scores?: Prisma.ScoreUncheckedCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleCreateOrConnectWithoutUserInput = {
@@ -522,6 +545,7 @@ export type ArticleCreateWithoutQuizzesInput = {
   summary: string
   updateAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArticlesInput
+  scores?: Prisma.ScoreCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUncheckedCreateWithoutQuizzesInput = {
@@ -533,6 +557,7 @@ export type ArticleUncheckedCreateWithoutQuizzesInput = {
   summary: string
   updateAt?: Date | string
   userId: string
+  scores?: Prisma.ScoreUncheckedCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleCreateOrConnectWithoutQuizzesInput = {
@@ -560,6 +585,7 @@ export type ArticleUpdateWithoutQuizzesInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
+  scores?: Prisma.ScoreUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateWithoutQuizzesInput = {
@@ -571,6 +597,71 @@ export type ArticleUncheckedUpdateWithoutQuizzesInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  scores?: Prisma.ScoreUncheckedUpdateManyWithoutArticleNestedInput
+}
+
+export type ArticleCreateWithoutScoresInput = {
+  id?: string
+  title: string
+  content: string
+  clerkId: string
+  createdAt?: Date | string
+  summary: string
+  updateAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutArticlesInput
+  quizzes?: Prisma.QuizCreateNestedManyWithoutArticleInput
+}
+
+export type ArticleUncheckedCreateWithoutScoresInput = {
+  id?: string
+  title: string
+  content: string
+  clerkId: string
+  createdAt?: Date | string
+  summary: string
+  updateAt?: Date | string
+  userId: string
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutArticleInput
+}
+
+export type ArticleCreateOrConnectWithoutScoresInput = {
+  where: Prisma.ArticleWhereUniqueInput
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutScoresInput, Prisma.ArticleUncheckedCreateWithoutScoresInput>
+}
+
+export type ArticleUpsertWithoutScoresInput = {
+  update: Prisma.XOR<Prisma.ArticleUpdateWithoutScoresInput, Prisma.ArticleUncheckedUpdateWithoutScoresInput>
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutScoresInput, Prisma.ArticleUncheckedCreateWithoutScoresInput>
+  where?: Prisma.ArticleWhereInput
+}
+
+export type ArticleUpdateToOneWithWhereWithoutScoresInput = {
+  where?: Prisma.ArticleWhereInput
+  data: Prisma.XOR<Prisma.ArticleUpdateWithoutScoresInput, Prisma.ArticleUncheckedUpdateWithoutScoresInput>
+}
+
+export type ArticleUpdateWithoutScoresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
+  quizzes?: Prisma.QuizUpdateManyWithoutArticleNestedInput
+}
+
+export type ArticleUncheckedUpdateWithoutScoresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleCreateManyUserInput = {
@@ -592,6 +683,7 @@ export type ArticleUpdateWithoutUserInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quizzes?: Prisma.QuizUpdateManyWithoutArticleNestedInput
+  scores?: Prisma.ScoreUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateWithoutUserInput = {
@@ -603,6 +695,7 @@ export type ArticleUncheckedUpdateWithoutUserInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutArticleNestedInput
+  scores?: Prisma.ScoreUncheckedUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateManyWithoutUserInput = {
@@ -622,10 +715,12 @@ export type ArticleUncheckedUpdateManyWithoutUserInput = {
 
 export type ArticleCountOutputType = {
   quizzes: number
+  scores: number
 }
 
 export type ArticleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quizzes?: boolean | ArticleCountOutputTypeCountQuizzesArgs
+  scores?: boolean | ArticleCountOutputTypeCountScoresArgs
 }
 
 /**
@@ -645,6 +740,13 @@ export type ArticleCountOutputTypeCountQuizzesArgs<ExtArgs extends runtime.Types
   where?: Prisma.QuizWhereInput
 }
 
+/**
+ * ArticleCountOutputType without action
+ */
+export type ArticleCountOutputTypeCountScoresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScoreWhereInput
+}
+
 
 export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -657,6 +759,7 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   quizzes?: boolean | Prisma.Article$quizzesArgs<ExtArgs>
+  scores?: boolean | Prisma.Article$scoresArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
@@ -699,6 +802,7 @@ export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type ArticleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   quizzes?: boolean | Prisma.Article$quizzesArgs<ExtArgs>
+  scores?: boolean | Prisma.Article$scoresArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ArticleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -713,6 +817,7 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     quizzes: Prisma.$QuizPayload<ExtArgs>[]
+    scores: Prisma.$ScorePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1119,6 +1224,7 @@ export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   quizzes<T extends Prisma.Article$quizzesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scores<T extends Prisma.Article$scoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$scoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1573,6 +1679,30 @@ export type Article$quizzesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.QuizScalarFieldEnum | Prisma.QuizScalarFieldEnum[]
+}
+
+/**
+ * Article.scores
+ */
+export type Article$scoresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Score
+   */
+  select?: Prisma.ScoreSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Score
+   */
+  omit?: Prisma.ScoreOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScoreInclude<ExtArgs> | null
+  where?: Prisma.ScoreWhereInput
+  orderBy?: Prisma.ScoreOrderByWithRelationInput | Prisma.ScoreOrderByWithRelationInput[]
+  cursor?: Prisma.ScoreWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScoreScalarFieldEnum | Prisma.ScoreScalarFieldEnum[]
 }
 
 /**

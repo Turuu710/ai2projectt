@@ -11,4 +11,5 @@
 export type * from './models/User'
 export type * from './models/Article'
 export type * from './models/Quiz'
+export type * from './models/Score'
 export type * from './commonInputTypes'

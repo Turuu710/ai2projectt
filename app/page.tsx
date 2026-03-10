@@ -45,7 +45,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/summary", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,6 +57,8 @@ export default function Home() {
 
       if (response.ok) {
         setSummary(data.summary);
+      } else {
+        toast.error("Failed to generate summary");
       }
     } catch (error) {
       console.error("Error:", error);

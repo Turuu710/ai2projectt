@@ -386,7 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Article: 'Article',
-  Quiz: 'Quiz'
+  Quiz: 'Quiz',
+  Score: 'Score'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "article" | "quiz"
+    modelProps: "user" | "article" | "quiz" | "score"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Score: {
+      payload: Prisma.$ScorePayload<ExtArgs>
+      fields: Prisma.ScoreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScoreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScoreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        findFirst: {
+          args: Prisma.ScoreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScoreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        findMany: {
+          args: Prisma.ScoreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>[]
+        }
+        create: {
+          args: Prisma.ScoreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        createMany: {
+          args: Prisma.ScoreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScoreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>[]
+        }
+        delete: {
+          args: Prisma.ScoreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        update: {
+          args: Prisma.ScoreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        deleteMany: {
+          args: Prisma.ScoreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScoreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScoreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>[]
+        }
+        upsert: {
+          args: Prisma.ScoreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScorePayload>
+        }
+        aggregate: {
+          args: Prisma.ScoreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScore>
+        }
+        groupBy: {
+          args: Prisma.ScoreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScoreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScoreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScoreCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -708,6 +783,18 @@ export const QuizScalarFieldEnum = {
 export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
+export const ScoreScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  articleId: 'articleId',
+  score: 'score',
+  timeSpent: 'timeSpent',
+  createdAt: 'createdAt'
+} as const
+
+export type ScoreScalarFieldEnum = (typeof ScoreScalarFieldEnum)[keyof typeof ScoreScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -776,6 +863,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -876,6 +977,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   article?: Prisma.ArticleOmit
   quiz?: Prisma.QuizOmit
+  score?: Prisma.ScoreOmit
 }
 
 /* Types for Logging */
