@@ -43,6 +43,44 @@ export default function ArticleForm({
   const { isSignedIn } = useUser();
   const router = useRouter();
 
+  const handleSaveArticle = async () => {
+    if (!title || !content) {
+      toast.error("Гарчиг болон агуулга заавал байх ёстой.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/articles", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          summary,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Нийтлэл амжилттай хадгалагдлаа!");
+
+        // 1. Sidebar эсвэл жагсаалтыг шинэчлэхийн тулд датаг дахин татах
+        router.refresh();
+
+        // 2. Home хуудас руу шилжих
+        router.push("/");
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || "Хадгалахад алдаа гарлаа.");
+      }
+    } catch (error) {
+      console.error("Save error:", error);
+      toast.error("Сервертэй холбогдоход алдаа гарлаа.");
+    } finally {
+      onSaveArticle();
+    }
+  };
   const handleGenerateSummary = (e: React.FormEvent) => {
     if (!isSignedIn) {
       e.preventDefault();
@@ -121,7 +159,7 @@ export default function ArticleForm({
             <>
               <Button
                 type="button"
-                onClick={onSaveArticle}
+                onClick={handleSaveArticle}
                 disabled={loading || !title}
                 variant="outline"
                 className="flex items-center gap-2"
