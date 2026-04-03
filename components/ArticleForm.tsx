@@ -349,7 +349,7 @@ export default function ArticleForm({
               <Button
                 type="button"
                 onClick={handleSaveArticle}
-                disabled={isLoading || !title}
+                disabled={isSaving}
                 variant="outline"
                 className="flex items-center gap-2"
               >
