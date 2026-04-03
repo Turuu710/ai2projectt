@@ -31,30 +31,28 @@ export async function POST(req: NextRequest, { params }: Context) {
       );
     }
 
-    const article = await prisma.article.findUnique({ where: { id: articleId } });
+    const article = await prisma.article.findUnique({
+      where: { id: articleId },
+    });
 
     if (!article) {
       return NextResponse.json({ error: "Article not found" }, { status: 404 });
     }
 
-    const createdQuizzes = await Promise.all(
+    const createdQuizzes = await prisma.$transaction(
       quizzes.map((quiz: QuizInput) => {
-        // Convert answer text to index
         const answerIndex = quiz.options.indexOf(quiz.answer);
-        // const answerValue = answerIndex >= 0 ? answerIndex.toString() : "0";
-
         return prisma.quiz.create({
           data: {
             clerkId,
             question: quiz.question,
             options: quiz.options,
-            answer: answerIndex >= 0 ? answerIndex : 0, 
+            answer: answerIndex >= 0 ? answerIndex : 0,
             articleId,
           },
         });
       }),
     );
-
     return NextResponse.json({ quizzes: createdQuizzes }, { status: 201 });
   } catch (error) {
     console.error("POST /api/articles/[id]/quizzes error:", error);
