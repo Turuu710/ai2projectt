@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
         title,
         content,
         summary: summary ?? "",
-        clerkId,
+        // clerkId,
         user: { connect: { id: dbUser.id } },
       },
     });
