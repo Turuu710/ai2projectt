@@ -34,13 +34,17 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const { userId: clerkId } = await auth();
 
+  if (!clerkId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await req.json();
     const { title, content, summary } = body;
 
-    if (!title || !content || !clerkId) {
+    if (!title || !content) {
       return NextResponse.json(
-        { error: "title, content, and authentication are required" },
+        { error: "Title and content are required" },
         { status: 400 },
       );
     }
@@ -50,13 +54,24 @@ export async function POST(req: NextRequest) {
     if (!dbUser) {
       const client = await clerkClient();
       const clerkUser = await client.users.getUser(clerkId);
-      const email = clerkUser.emailAddresses[0]?.emailAddress ?? "";
-      const name =
-        `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
-
       dbUser = await prisma.user.create({
-        data: { clerkId, email, name },
+        data: {
+          clerkId,
+          email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
+          name: `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim(),
+        },
       });
+    }
+
+    const existingArticle = await prisma.article.findFirst({
+      where: {
+        title: title,
+        clerkId: clerkId,
+      },
+    });
+
+    if (existingArticle) {
+      return NextResponse.json(existingArticle, { status: 200 });
     }
 
     const article = await prisma.article.create({
@@ -70,11 +85,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(article, { status: 201 });
-  } catch (error) {
-    console.error("POST /api/articles error:", error);
-    return NextResponse.json(
-      { error: "Failed to create article" },
-      { status: 500 },
-    );
+  } catch (error: any) {
+    console.error("POST Error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
