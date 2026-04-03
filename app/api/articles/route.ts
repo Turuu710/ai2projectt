@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
       const client = await clerkClient();
       const clerkUser = await client.users.getUser(clerkId);
       const email = clerkUser.emailAddresses[0]?.emailAddress ?? "";
-      const name = `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
+      const name =
+        `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
 
       dbUser = await prisma.user.create({
         data: { clerkId, email, name },
@@ -64,7 +65,7 @@ export async function POST(req: NextRequest) {
         content,
         summary: summary ?? "",
         clerkId,
-        userId: dbUser.id,
+        user: { connect: { id: dbUser.id } },
       },
     });
 
